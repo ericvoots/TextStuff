@@ -20,6 +20,18 @@ def find_numbers(number_string):
     return number_list
 
 
+def placeholder_function(string, placeholder_num_of_words):
+    '''
+
+    :param string:
+    :param placeholder_num_of_words:
+    :return:
+
+    '''
+
+    
+
+
 def main_text_test(id, string, num_of_words):
     '''
     :param id: how to identify the string
@@ -147,7 +159,6 @@ if __name__ == "__main__":
     test_df = pd.read_csv('test.csv')
 
     # loop through the dataframe for each id and string
-
     master_df = pd.DataFrame(columns=['id', 'string', 'match_num', 'number',
                                       'word matches before', 'word matches after'])
 
