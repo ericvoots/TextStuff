@@ -1,4 +1,5 @@
 import re
+import pandas as pd
 
 
 '''
@@ -18,6 +19,7 @@ def find_numbers(number_string):
 
     return number_list
 
+
 def main_text_test(id, string, num_of_words):
     '''
     :param id: how to identify the string
@@ -26,55 +28,143 @@ def main_text_test(id, string, num_of_words):
     :return: master_string_dict of all numbers and the first two characters
     '''
 
-    print(f'This is the string \n{string}')
-
     # get the numbers
     number_string_list = find_numbers(string)
 
-    temp = []
+    # init dataframe with needed columns
+    string_df = pd.DataFrame(columns=['id', 'string', 'match_num', 'number',
+                                      'word matches before', 'word matches after'])
 
-    # inner string dict
-    inner_string_dict = {}
+    # if needed a step to clean the string here and call another created function
+    # this would be a place to filter PII prior to going forward
 
+
+    # loop through the string and keep indexes
     for idx, number in enumerate(number_string_list):
         list_of_words = string.split()
 
         # create empty string to append
-        empty_string = ''
+        empty_string_backward = ''
+        empty_string_forward = ''
 
         i = num_of_words
-        # start loop
+        # start loop for before words
         while i > 0:
-            previous_word = list_of_words[list_of_words.index(str(number)) - i]
 
-            i+=-1
+            # here is where you change to forward or backwards
 
-            # append space
-            if i != num_of_words:
-                empty_string += ' ' + previous_word
+            # find index of where to get word and is out of range
+            index_num = list_of_words.index(str(number)) - i
+
+            if index_num >= 0:
+
+                # can just replace this part with index num later if need but
+                previous_word = list_of_words[list_of_words.index(str(number)) - i]
+
+                # append space if not the first word
+                if i != num_of_words:
+                    empty_string_backward += ' ' + previous_word
+
+                else:
+
+                    empty_string_backward += previous_word
+
             else:
-                empty_string += previous_word
 
-        #print(f'The previous two words for {number} are {empty_string}')
+                pass
 
-        # that way if there are duplicates have index of match
-        number = str(idx) + str(number)
+            # increment to stop while loop
+            i += - 1
 
-        master_dict_key = 'id-' + str(id) + ' match_num_' + str(idx)
 
-        print(master_dict_key)
-        # init master dict
-        master_string_dict = {}
+        # same as backwards steps only other order
 
-    return master_string_dict
+        j = 0
+
+        next_word = None
+        while j < num_of_words and next_word is None:
+
+            # find index of where to get word and is out of range
+            index_num = list_of_words.index(str(number)) + j + 1
+
+            print('index num test ****** ', index_num)
+
+            next_word = None
+
+            while next_word is None:
+                try:
+                    next_word = list_of_words[list_of_words.index(str(number)) + j + 1]
+
+                    if j != num_of_words:
+                        empty_string_forward += ' ' + next_word
+
+                    else:
+                        empty_string_forward += ' ' + next_word
+
+                    j += 1
+
+                except IndexError as error:
+
+                    # find index of where to get word and is out of range
+                    index_num = list_of_words.index(str(number)) + j + 1
+
+                    next_word = list_of_words[list_of_words.index(str(number)) + j]
+
+                    print('index num test ****** ', index_num)
+
+                    j += 1
+
+
+        string_df = string_df.append({'id': id,
+                                      'string': string,
+                                      'match_num': idx + 1,
+                                      'number': number,
+                                      'word matches before': empty_string_backward,
+                                      'word matches after': empty_string_forward},
+                                      ignore_index=True)
+
+
+    return string_df
+
+
+def save_dataframe_matches(save_mathces_df, output_path):
+    '''
+
+    :param save_mathces_df: dataframe you want to save off
+    :param output_path: where the sas dataset goes and where the csv goes
+    :return: nothing, saves to output location
+    '''
+
+    save_mathces_df.to_csv(output_path + 'matches.csv', index=False)
 
 
 if __name__ == "__main__":
 
-    id = 1
-
-    test_string = 'The first number is 1111 but the number 2222 is not far behind'
-
+    # change this to get more or less words
     num_of_words = 2
 
-    main_text_test(id=id, string=test_string, num_of_words=num_of_words)
+    # this is the SQL part here******** test_df is whatever comes from SQL
+    test_df = pd.read_csv('test.csv')
+
+    # loop through the dataframe for each id and string
+
+    master_df = pd.DataFrame(columns=['id', 'string', 'match_num', 'number',
+                                      'word matches before', 'word matches after'])
+
+    # create lists to loop through from SQL pull
+    id_list = test_df['id'].tolist()
+    string_list = test_df['string'].tolist()
+
+    # separate loop out here, loop through each string and change the next 3 items as needed
+    for idx, id in enumerate(id_list):
+
+        id = id
+
+        string=string_list[idx]
+
+        match_df = main_text_test(id=id, string=string, num_of_words=num_of_words)
+
+        # append master in loop match_df
+        master_df = master_df.append(match_df)
+
+    save_dataframe_matches(master_df, 'C:\\textstuff\\')
