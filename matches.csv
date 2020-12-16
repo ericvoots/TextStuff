@@ -1,9 +1,9 @@
 id,string,match_num,number,word matches before,word matches after
-1,The 1111  number 2222 is not far behind,1,1111, The, number 2222
-1,The 1111  number 2222 is not far behind,2,2222,1111 number, is not
-2,The first number is 3333 but the number 4444 is not far behind,1,3333,number is, but the
-2,The first number is 3333 but the number 4444 is not far behind,2,4444,the number, is not
-3,The first number is 5555 but the number 6666 is not far behind,1,5555,number is, but the
-3,The first number is 5555 but the number 6666 is not far behind,2,6666,the number, is not
-4,The first number is 7777 but the number 8888 is,1,7777,number is, but the
-4,The first number is 7777 but the number 8888 is,2,8888,the number, is
+1,The end is not near 1111  number 2222 the end,1,1111,not near,number 2222
+1,The end is not near 1111  number 2222 the end,2,2222,1111 number,the end
+2,The first number is 3333 but the number 4444 the end,1,3333,number is,but the
+2,The first number is 3333 but the number 4444 the end,2,4444,the number,the end
+3,The first number is 5555 but the number 6666 the end,1,5555,number is,but the
+3,The first number is 5555 but the number 6666 the end,2,6666,the number,the end
+4,The first number is 7777 but the number 8888 the end,1,7777,number is,but the
+4,The first number is 7777 but the number 8888 the end,2,8888,the number,the end

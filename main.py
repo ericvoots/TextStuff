@@ -29,7 +29,7 @@ def placeholder_function(string, placeholder_num_of_words):
 
     '''
 
-    
+
 
 
 def main_text_test(id, string, num_of_words):
@@ -63,68 +63,39 @@ def main_text_test(id, string, num_of_words):
         # start loop for before words
         while i > 0:
 
-            # here is where you change to forward or backwards
+            # can just replace this part with index num later if need but
+            previous_word = list_of_words[list_of_words.index(str(number)) - i]
 
-            # find index of where to get word and is out of range
-            index_num = list_of_words.index(str(number)) - i
-
-            if index_num >= 0:
-
-                # can just replace this part with index num later if need but
-                previous_word = list_of_words[list_of_words.index(str(number)) - i]
-
-                # append space if not the first word
-                if i != num_of_words:
-                    empty_string_backward += ' ' + previous_word
-
-                else:
-
-                    empty_string_backward += previous_word
+            # append space if not the first word
+            if i != num_of_words:
+                empty_string_backward += ' ' + previous_word
 
             else:
 
-                pass
+                empty_string_backward += previous_word
 
             # increment to stop while loop
             i += - 1
 
 
         # same as backwards steps only other order
-
         j = 0
 
-        next_word = None
-        while j < num_of_words and next_word is None:
+        while j < num_of_words:
 
-            # find index of where to get word and is out of range
-            index_num = list_of_words.index(str(number)) + j + 1
+            next_word = list_of_words[list_of_words.index(str(number)) + j + 1]
 
-            print('index num test ****** ', index_num)
+            if j == num_of_words - 1:
+                empty_string_forward += ' ' + next_word
 
-            next_word = None
+            # for the first word
+            else:
 
-            while next_word is None:
-                try:
-                    next_word = list_of_words[list_of_words.index(str(number)) + j + 1]
+                empty_string_forward += next_word
 
-                    if j != num_of_words:
-                        empty_string_forward += ' ' + next_word
+            j += 1
 
-                    else:
-                        empty_string_forward += ' ' + next_word
 
-                    j += 1
-
-                except IndexError as error:
-
-                    # find index of where to get word and is out of range
-                    index_num = list_of_words.index(str(number)) + j + 1
-
-                    next_word = list_of_words[list_of_words.index(str(number)) + j]
-
-                    print('index num test ****** ', index_num)
-
-                    j += 1
 
 
         string_df = string_df.append({'id': id,
