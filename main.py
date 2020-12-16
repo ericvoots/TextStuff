@@ -51,6 +51,8 @@ def main_text_test(id, string, num_of_words):
     # this would be a place to filter PII prior to going forward
 
 
+    # ****PLACEHOLDER STEP *****
+
     # loop through the string and keep indexes
     for idx, number in enumerate(number_string_list):
         list_of_words = string.split()
@@ -95,9 +97,6 @@ def main_text_test(id, string, num_of_words):
 
             j += 1
 
-
-
-
         string_df = string_df.append({'id': id,
                                       'string': string,
                                       'match_num': idx + 1,
@@ -105,6 +104,8 @@ def main_text_test(id, string, num_of_words):
                                       'word matches before': empty_string_backward,
                                       'word matches after': empty_string_forward},
                                       ignore_index=True)
+
+    # remove placeholder strings leftover here before returning
 
 
     return string_df
