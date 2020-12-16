@@ -33,7 +33,10 @@ def main_text_test(id, string, num_of_words):
 
     temp = []
 
-    for number in number_string_list:
+    # inner string dict
+    inner_string_dict = {}
+
+    for idx, number in enumerate(number_string_list):
         list_of_words = string.split()
 
         # create empty string to append
@@ -52,13 +55,16 @@ def main_text_test(id, string, num_of_words):
             else:
                 empty_string += previous_word
 
-        print(f'The previous two words for {number} are {empty_string}')
+        #print(f'The previous two words for {number} are {empty_string}')
 
-    # init master dict
-    master_string_dict = {}
+        # that way if there are duplicates have index of match
+        number = str(idx) + str(number)
 
-    # inner string dict
-    inner_string = {}
+        master_dict_key = 'id-' + str(id) + ' match_num_' + str(idx)
+
+        print(master_dict_key)
+        # init master dict
+        master_string_dict = {}
 
     return master_string_dict
 
