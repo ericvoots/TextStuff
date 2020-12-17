@@ -11,6 +11,7 @@ https://stackoverflow.com/questions/17686809/how-to-find-word-next-to-a-word-in-
 https://stackoverflow.com/questions/13682044/remove-unwanted-parts-from-strings-in-a-column
 '''
 
+
 def find_numbers(number_string):
     """
 
@@ -21,7 +22,7 @@ def find_numbers(number_string):
     # list comprehension to get digits
     number_list_comprehension = [int(s) for s in number_string.split() if s.isdigit()]
 
-    # do regex in case there is no spaces
+    # do regex in case there is no spaces and a double for digits
     number_list_regex = re.findall(r"\d+", number_string)
 
     number_list = list(set(number_list_comprehension) | set(number_list_regex))
@@ -60,14 +61,12 @@ def main_text_test(id, string, num_of_words):
     # this would be a place to filter PII prior to going forward
 
 
-    # ****PLACEHOLDER STEP *****
-
-
-
-
     # loop through the string and keep indexes
     for idx, number in enumerate(number_string_list):
         list_of_words = string.split()
+
+        # ****PLACEHOLDER STEP with list_of_words *****
+
 
         # create empty string to append
         empty_string_backward = ''
@@ -118,6 +117,8 @@ def main_text_test(id, string, num_of_words):
 
     # remove placeholder strings leftover here before returning
 
+
+    # final QA step to look for prior number in case not enough words
 
     return string_df
 
