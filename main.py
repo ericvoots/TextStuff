@@ -6,6 +6,9 @@ import pandas as pd
 helpful links
 https://stackoverflow.com/questions/4289331/how-to-extract-numbers-from-a-string-in-python
 https://stackoverflow.com/questions/17686809/how-to-find-word-next-to-a-word-in-python
+
+# dataframe part to remove placeholders in string columns
+https://stackoverflow.com/questions/13682044/remove-unwanted-parts-from-strings-in-a-column
 '''
 
 def find_numbers(number_string):
@@ -15,7 +18,13 @@ def find_numbers(number_string):
     :return: the numbers found in a list
     """
 
-    number_list = [int(s) for s in number_string.split() if s.isdigit()]
+    # list comprehension to get digits
+    number_list_comprehension = [int(s) for s in number_string.split() if s.isdigit()]
+
+    # do regex in case there is no spaces
+    number_list_regex = re.findall(r"\d+", number_string)
+
+    number_list = list(set(number_list_comprehension) | set(number_list_regex))
 
     return number_list
 
@@ -53,6 +62,9 @@ def main_text_test(id, string, num_of_words):
 
     # ****PLACEHOLDER STEP *****
 
+
+
+
     # loop through the string and keep indexes
     for idx, number in enumerate(number_string_list):
         list_of_words = string.split()
@@ -78,7 +90,6 @@ def main_text_test(id, string, num_of_words):
 
             # increment to stop while loop
             i += - 1
-
 
         # same as backwards steps only other order
         j = 0
@@ -124,7 +135,7 @@ def save_dataframe_matches(save_mathces_df, output_path):
 
 if __name__ == "__main__":
 
-    # change this to get more or less words
+    # change this to get more or less words, much later for fancy stuff add argparse
     num_of_words = 2
 
     # this is the SQL part here******** test_df is whatever comes from SQL
